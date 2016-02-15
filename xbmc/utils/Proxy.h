@@ -19,6 +19,14 @@
  *
  */
 
+#include <cstdint>
+#include <memory>
+#include <string>
+
+class CProxy;
+
+typedef std::shared_ptr<CProxy> CProxyPtr;
+
 class CProxy
 {
 public:
@@ -30,4 +38,49 @@ public:
     ProxySocks5,
     ProxySocks5Remote,
   } Type;
+
+public:
+  CProxy();
+
+  CProxy(const std::string &url);
+
+  CProxy(Type type, const std::string &hostPortUserPassword);
+
+  CProxy(Type type, const std::string& host, uint16_t port,
+    const std::string& user, const std::string& password);
+
+  ~CProxy();
+
+public:
+  operator bool() const { return !m_host.empty(); }
+
+  Type GetType() const { return m_type; }
+  void SetType(Type type) { m_type = type; }
+  const std::string& GetHost() const { return m_host; }
+  void SetHost(const std::string &host) { m_host = host; }
+  const std::string& GetUser() const { return m_user; }
+  void SetPort(const uint16_t port) { m_port = port; }
+  uint16_t GetPort() const { return m_port; }
+  void SetUser(const std::string &user) { m_user = user; }
+  const std::string& GetPassword() const { return m_password; }
+  void SetPassword(const std::string &password) { m_password = password; }
+
+  std::string GetUrl() const;
+  void SetUrl(const std::string &url);
+
+  std::string GetHostWithPortUserPassword() const;
+  void SetHostWithPortUserPassword(const std::string &hostPortUserPassword);
+
+  std::string GetHostWithPort() const;
+  void SetHostWithPort(const std::string &host);
+
+  std::string GetUserWithPassword() const;
+  void SetUserWithPassword(const std::string &userpass);
+
+private:
+  Type m_type;
+  std::string m_host;
+  uint16_t m_port;
+  std::string m_user;
+  std::string m_password;
 };
