@@ -65,9 +65,7 @@ namespace XFILE
       void Cancel();
       void Reset();
       void SetUserAgent(const std::string& sUserAgent)           { m_userAgent = sUserAgent; }
-      void SetProxy(const std::string &proxy)                    { m_proxy = proxy; }
-      void SetProxyUserPass(const std::string &proxyuserpass)    { m_proxyuserpass = proxyuserpass; }
-      void SetProxyType(CProxy::Type proxytype)                  { m_proxytype = proxytype; }
+      void SetProxy(const CProxy &proxy)                	 { m_proxy = proxy; }
       void SetCustomRequest(const std::string &request)          { m_customrequest = request; }
       void UseOldHttpVersion(bool bUse)                          { m_useOldHttpVersion = bUse; }
       void SetAcceptEncoding(const std::string& encoding)        { m_acceptencoding = encoding; }
@@ -156,9 +154,7 @@ namespace XFILE
 
       std::string     m_url;
       std::string     m_userAgent;
-      std::string     m_proxy;
-      std::string     m_proxyuserpass;
-      CProxy::Type    m_proxytype;
+      CProxy          m_proxy;
       std::string     m_customrequest;
       std::string     m_acceptencoding;
       std::string     m_acceptCharset;
