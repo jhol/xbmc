@@ -638,6 +638,16 @@ AVDictionary *CDVDDemuxFFmpeg::GetFFMpegOptionsFromURL(const CURL &url)
       av_dict_set(&options, "cookies", cookies.c_str(), 0);
 
   }
+
+  const CProxy proxy = url.GetProxy();
+  if (proxy)
+  {
+    if (proxy.GetType() == CProxy::ProxyHttp) {
+      const std::string url = proxy.GetUrl();
+      av_dict_set(&options, "http_proxy", url.c_str(), 0);
+    }
+  }
+
   return options;
 }
 
