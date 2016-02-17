@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <string>
 #include "utils/UrlOptions.h"
+#include "utils/Proxy.h"
 
 #ifdef TARGET_WINDOWS
 #undef SetPort // WIN32INCLUDES this is defined as SetPortA in WinSpool.h which is being included _somewhere_
@@ -123,6 +124,9 @@ public:
   void SetProtocolOption(const std::string &key, const std::string &value);
   void RemoveProtocolOption(const std::string &key);
 
+  CProxy GetProxy() const;
+  void SetProxy(const CProxy &proxy);
+
 protected:
   int m_iPort;
   std::string m_strHostName;
@@ -137,4 +141,5 @@ protected:
   std::string m_strProtocolOptions;
   CUrlOptions m_options;
   CUrlOptions m_protocolOptions;
+  CProxy m_proxy;
 };

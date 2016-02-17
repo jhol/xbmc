@@ -900,3 +900,13 @@ void CURL::RemoveProtocolOption(const std::string &key)
   m_protocolOptions.RemoveOption(key);
   m_strProtocolOptions = m_protocolOptions.GetOptionsString(false);
 }
+
+CProxy CURL::GetProxy() const
+{
+  return m_proxy;
+}
+
+void CURL::SetProxy(const CProxy &proxy)
+{
+  m_proxy = proxy;
+}
