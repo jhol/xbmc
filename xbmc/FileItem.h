@@ -35,6 +35,7 @@
 #include "utils/IArchivable.h"
 #include "utils/ISerializable.h"
 #include "utils/ISortable.h"
+#include "utils/Proxy.h"
 #include "utils/SortUtils.h"
 #include "XBDateTime.h"
 
@@ -129,6 +130,9 @@ public:
   const std::string &GetPath() const { return m_strPath; };
   void SetPath(const std::string &path) { m_strPath = path; };
   bool IsPath(const std::string& path, bool ignoreURLOptions = false) const;
+
+  CProxy GetProxy() const { return m_proxy; };
+  void SetProxy(const CProxy &proxy) { m_proxy = proxy; };
 
   /*! \brief reset class to it's default values as per construction.
    Free's all allocated memory.
@@ -520,6 +524,7 @@ private:
 
   std::string m_strPath;            ///< complete path to item
 
+  CProxy m_proxy;
   SortSpecial m_specialSort;
   bool m_bIsParentFolder;
   bool m_bCanQueue;

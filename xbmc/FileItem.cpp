@@ -340,6 +340,7 @@ const CFileItem& CFileItem::operator=(const CFileItem& item)
   m_bLabelPreformated=item.m_bLabelPreformated;
   FreeMemory();
   m_strPath = item.GetPath();
+  m_proxy = item.GetProxy();
   m_bIsParentFolder = item.m_bIsParentFolder;
   m_iDriveType = item.m_iDriveType;
   m_bIsShareOrDrive = item.m_bIsShareOrDrive;
@@ -528,6 +529,8 @@ void CFileItem::Archive(CArchive& ar)
     }
     else
       ar << 0;
+
+    ar << m_proxy;
   }
   else
   {
@@ -572,6 +575,8 @@ void CFileItem::Archive(CArchive& ar)
     if (iType == 1)
       ar >> *GetPictureInfoTag();
 
+    ar >> m_proxy;
+
     SetInvalid();
   }
 }
@@ -600,6 +605,8 @@ void CFileItem::Serialize(CVariant& value) const
 
   if (m_pictureInfoTag)
     (*m_pictureInfoTag).Serialize(value["pictureInfoTag"]);
+
+  m_proxy.Serialize(value["proxy"]);
 }
 
 void CFileItem::ToSortable(SortItem &sortable, Field field) const
@@ -1548,11 +1555,13 @@ std::string CFileItem::GetOpticalMediaPath() const
 void CFileItem::SetURL(const CURL& url)
 {
   m_strPath = url.Get();
+  m_proxy = url.GetProxy();
 }
 
 const CURL CFileItem::GetURL() const
 {
   CURL url(m_strPath);
+  url.SetProxy(m_proxy);
   return url;
 }
 
