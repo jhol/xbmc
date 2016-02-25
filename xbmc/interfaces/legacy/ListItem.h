@@ -188,6 +188,11 @@ namespace XBMCAddon
        *     - count         : integer (12) - can be used to store an id for later, or for sorting purposes
        *     - size          : long (1024) - size in bytes
        *     - date          : string (%d.%m.%Y / 01.01.2009) - file date
+       *     - proxy.type    : string (http) - http, socks4, socks4a, socks5, socks5-remote
+       *     - proxy.host    : string (example.com)
+       *     - proxy.port    : integer (3128)
+       *     - proxy.user    : string (user)
+       *     - proxy.password  : string (mypassword)
        * - Video Values:
        *     - genre         : string (Comedy)
        *     - year          : integer (2009)

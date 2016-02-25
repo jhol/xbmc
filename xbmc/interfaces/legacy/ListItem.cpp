@@ -28,6 +28,7 @@
 #include "music/tags/MusicInfoTag.h"
 #include "pictures/PictureInfoTag.h"
 #include "utils/log.h"
+#include "utils/Proxy.h"
 #include "utils/Variant.h"
 #include "utils/StringUtils.h"
 #include "settings/AdvancedSettings.h"
@@ -273,6 +274,37 @@ namespace XBMCAddon
     void ListItem::setInfo(const char* type, const InfoLabelDict& infoLabels)
     {
       LOCKGUI;
+
+      for (InfoLabelDict::const_iterator it = infoLabels.begin(); it != infoLabels.end(); ++it)
+      {
+        String key = it->first;
+        StringUtils::ToLower(key);
+
+        const InfoLabelValue& alt = it->second;
+        const String value(alt.which() == first ? alt.former() : emptyString);
+
+        if (key == "proxy.type") {
+	  if (value == "http")
+	    item->GetProxy().SetType(CProxy::ProxyHttp);
+          else if (value == "socks4")
+	    item->GetProxy().SetType(CProxy::ProxySocks4);
+          else if (value == "socks4a")
+            item->GetProxy().SetType(CProxy::ProxySocks4A);
+          else if (value == "socks5")
+            item->GetProxy().SetType(CProxy::ProxySocks5);
+          else if (value == "socks5-remote")
+            item->GetProxy().SetType(CProxy::ProxySocks5Remote);
+          else
+            CLog::Log(LOGERROR,"NEWADDON Invalid proxy type \"%s\"", value.c_str());
+        } else if (key == "proxy.host")
+          item->GetProxy().SetHost(value);
+        else if (key == "proxy.port")
+          item->GetProxy().SetPort(atoi(value.c_str()));
+        else if (key == "proxy.user")
+          item->GetProxy().SetUser(value);
+        else if (key == "proxy.password")
+          item->GetProxy().SetPassword(value);
+      }
 
       if (strcmpi(type, "video") == 0)
       {
