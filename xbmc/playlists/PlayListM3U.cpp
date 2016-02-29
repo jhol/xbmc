@@ -301,6 +301,7 @@ CURL CPlayListM3U::GetBestBandwidthStream(const CURL &url, size_t bandwidth)
 
   // if any protocol options were set, restore them
   subStreamUrl.SetProtocolOptions(url.GetProtocolOptions());
+  subStreamUrl.SetProxy(url.GetProxy());
   return subStreamUrl;
 }
 
