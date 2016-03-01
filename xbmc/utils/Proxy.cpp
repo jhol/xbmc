@@ -21,6 +21,7 @@
 #include <sstream>
 
 #include "Archive.h"
+#include "Variant.h"
 
 #include "Proxy.h"
 
@@ -183,4 +184,13 @@ void CProxy::Archive(CArchive& ar)
     ar >> m_user;
     ar >> m_password;
   }
+}
+
+void CProxy::Serialize(CVariant& value) const
+{
+  value["type"] = ProtocolNames[m_type];
+  value["host"] = m_host;
+  value["port"] = m_port;
+  value["user"] = m_user;
+  value["password"] = m_password;
 }

@@ -24,13 +24,14 @@
 #include <string>
 
 #include "IArchivable.h"
+#include "ISerializable.h"
 
 class CProxy;
 
 typedef std::shared_ptr<CProxy> CProxyPtr;
 
 class CProxy :
-  public IArchivable
+  public IArchivable, public ISerializable
 {
 public:
   typedef enum
@@ -82,6 +83,7 @@ public:
 
 public:
   void Archive(CArchive& ar);
+  void Serialize(CVariant& value) const;
 
 private:
   Type m_type;
