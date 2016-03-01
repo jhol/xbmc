@@ -23,11 +23,14 @@
 #include <memory>
 #include <string>
 
+#include "IArchivable.h"
+
 class CProxy;
 
 typedef std::shared_ptr<CProxy> CProxyPtr;
 
-class CProxy
+class CProxy :
+  public IArchivable
 {
 public:
   typedef enum
@@ -49,7 +52,7 @@ public:
   CProxy(Type type, const std::string& host, uint16_t port,
     const std::string& user, const std::string& password);
 
-  ~CProxy();
+  virtual ~CProxy();
 
 public:
   operator bool() const { return !m_host.empty(); }
@@ -76,6 +79,9 @@ public:
 
   std::string GetUserWithPassword() const;
   void SetUserWithPassword(const std::string &userpass);
+
+public:
+  void Archive(CArchive& ar);
 
 private:
   Type m_type;

@@ -20,6 +20,8 @@
 
 #include <sstream>
 
+#include "Archive.h"
+
 #include "Proxy.h"
 
 using std::string;
@@ -159,4 +161,26 @@ void CProxy::SetUserWithPassword(const string &userpass)
   std::getline(ss, m_user, ':');
   std::istreambuf_iterator<char> eos;
   m_password = string(std::istreambuf_iterator<char>(ss), eos);
+}
+
+void CProxy::Archive(CArchive& ar)
+{
+  if (ar.IsStoring())
+  {
+    ar << (int)m_type;
+    ar << m_host;
+    ar << m_port;
+    ar << m_user;
+    ar << m_password;
+  }
+  else
+  {
+    int iType;
+    ar >> iType;
+    m_type = static_cast<CProxy::Type>(iType);
+    ar >> m_host;
+    ar >> m_port;
+    ar >> m_user;
+    ar >> m_password;
+  }
 }
